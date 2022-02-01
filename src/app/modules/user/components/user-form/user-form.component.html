@@ -20,6 +20,7 @@
         </div>
         <div class="mb-3 col-3">
             <input type="number" formControlName="age" class="form-control" placeholder="Age">
+            <!-- {{userForm.controls.age.value - 1998}} -->
         </div>
         <div class="mb-3 col-3">
             <input type="number" formControlName="mobileNumber" class="form-control" placeholder="Mobile number">
@@ -48,9 +49,12 @@
 
         <div class="mb-3 col-3" formArrayName="skills"
             *ngFor="let skill of userForm.get('skills')['controls']; let i = index">
-            <div [formGroupName]="i">
+            <div [formGroupName]="i" class="d-flex">
                 <input type="text" formControlName="technicalSkills" class="form-control"
                     placeholder="Technical Skills">
+                <button class="btn-warning" (click)="deleteSkills(i)">
+                    delete
+                </button>
             </div>
         </div>
         <div class="form-check col-3">

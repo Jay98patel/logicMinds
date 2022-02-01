@@ -46,4 +46,12 @@ export class UserFormComponent implements OnInit {
     console.log(this.userForm.value)
   }
 
+  deleteSkills(index:number){
+    if(this.skills.length !=1){
+      this.skills = this.userForm.get('skills') as FormArray;
+      this.skills.removeAt(index)
+    }
+    console.log(this.skills.length)
+  }
+
 }

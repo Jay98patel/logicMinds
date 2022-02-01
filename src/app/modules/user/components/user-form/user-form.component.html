@@ -1,8 +1,22 @@
 <div>
     <h4>User Details</h4>
     <form class="column m-4" [formGroup]="userForm" (ngSubmit)="saveUserDetails()">
+        touched:{{userForm.controls.name.touched | json}}<br>
+        untouched:{{userForm.controls.name.untouched | json}}<br>
+        invalid:{{userForm.controls.name.invalid | json}}<br>
+        dirty:{{userForm.controls.name.dirty | json}}<br>
+        pristine:{{userForm.controls.name.pristine | json}}<br>
         <div class="mb-3 col-3">
             <input type="text" formControlName="name" class="form-control" placeholder="Name">
+            <small class="error" *ngIf="userForm.controls.name.touched && userForm.controls.name.errors?.required">
+                This field is required
+            </small>
+            <small class="error" *ngIf="userForm.controls.name.touched && userForm.controls.name.errors?.minlength">
+                Min Length 6
+            </small>
+            <small class="error" *ngIf="userForm.controls.name.touched && userForm.controls.name.errors?.maxlength">
+                Max Length 7
+            </small>
         </div>
         <div class="mb-3 col-3">
             <input type="number" formControlName="age" class="form-control" placeholder="Age">
@@ -11,7 +25,7 @@
             <input type="number" formControlName="mobileNumber" class="form-control" placeholder="Mobile number">
         </div>
         <div class="mb-3 col-3">
-            <select class="form-select" formControlName="country" >
+            <select class="form-select" formControlName="country">
                 <option selected disabled>Select Country</option>
                 <option value="1">INDIA</option>
             </select>
@@ -30,21 +44,23 @@
                 </label>
             </div>
         </div>
-        <button type="button" (click)="addSkills()" style="margin-right: 5px;">Add</button>
+        <button type="button" class="btn" (click)="addSkills()" style="margin-right: 5px;">Add Skills</button>
 
-        <div class="mb-3 col-3" formArrayName="skills"  *ngFor="let skill of userForm.controls.skills; let i = index">
-
-            <input type="text" [formGroupName]="i" formControlName="technicalSkills" class="form-control" placeholder="Technical Skills">
+        <div class="mb-3 col-3" formArrayName="skills"
+            *ngFor="let skill of userForm.get('skills')['controls']; let i = index">
+            <div [formGroupName]="i">
+                <input type="text" formControlName="technicalSkills" class="form-control"
+                    placeholder="Technical Skills">
+            </div>
         </div>
         <div class="form-check col-3">
-            <input class="form-check-input" termsCondition="termsCondition" type="checkbox" 
-                id="termsCondition">
+            <input class="form-check-input" termsCondition="termsCondition" type="checkbox" id="termsCondition">
             <label class="form-check-label" for="termsCondition">
                 Terms & Condition
             </label>
         </div>
         <div>
-            <button type="submit" class="btn btn-primary">Primary</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
 </div>
